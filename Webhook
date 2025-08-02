@@ -1,0 +1,32 @@
+<?php
+// توکن رباتت رو اینجا بذار
+$BOT_TOKEN = '7651648073:AAEQkDetrLhrlmHf2yDIYtSOHfVwRRXoo9I';
+
+// دریافت درخواست از تلگرام
+$update = json_decode(file_get_contents('php://input'), true);
+
+// بررسی پیام
+if (isset($update['message'])) {
+    $chat_id = $update['message']['chat']['id'];
+    $text = $update['message']['text'] ?? '';
+
+    if ($text == '/start') {
+        sendMessage($chat_id, 'سلام! رباتت روی Render داره کار می‌کنه! 😎');
+    } elseif ($text == '/help') {
+        sendMessage($chat_id, 'دستورات:\n/start - شروع ربات\n/help - راهنما');
+    } else {
+        sendMessage($chat_id, 'پیام دریافت شد: ' . $text);
+    }
+}
+
+// تابع ارسال پیام
+function sendMessage($chat_id, $text) {
+    global $BOT_TOKEN;
+    $url = "https://api.telegram.org/bot$BOT_TOKEN/sendMessage?" . http_build_query([
+        'chat_id' => $chat_id,
+        'text' => $text,
+        'parse_mode' => 'HTML'
+    ]);
+    file_get_contents($url);
+}
+?>
