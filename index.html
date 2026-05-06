@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeydariGame - FPS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <div id="ui">
+        <div id="health">جان: <span id="healthValue">100</span></div>
+        <div id="ammo">تیر: <span id="ammoValue">30</span></div>
+        <div id="score">امتیاز: <span id="scoreValue">0</span></div>
+        <div id="wave">موج: <span id="waveValue">1</span></div>
+    </div>
+    <div id="gameOver" class="hidden">
+        <div id="gameOverContent">
+            <h1>بازی تمام شد!</h1>
+            <p>امتیاز نهایی: <span id="finalScore">0</span></p>
+            <button onclick="location.reload()">دوباره بازی کن</button>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
