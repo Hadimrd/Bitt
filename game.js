@@ -9,8 +9,8 @@ canvas.height = window.innerHeight;
 const player = {
     x: canvas.width / 2,
     y: canvas.height / 2,
-    width: 0,
-    height: 0,
+    width: 40,
+    height: 40,
     speed: 5,
     health: 100,
     maxHealth: 100,
@@ -48,7 +48,10 @@ enemyImg.src = 'https://github.com/Hadimrd/Bitt/blob/main/IMG_20260506_083907.jp
 // Event Listeners
 window.addEventListener('keydown', (e) => {
     keys[e.key] = true;
-    if (e.key === ' ') shoot();
+    if (e.key === ' ') {
+        e.preventDefault();
+        shoot();
+    }
 });
 
 window.addEventListener('keyup', (e) => {
@@ -108,8 +111,8 @@ function spawnEnemy() {
     enemies.push({
         x: x,
         y: y,
-        width: 40,
-        height: 40,
+        width: 50,
+        height: 50,
         health: 50,
         maxHealth: 50,
         speed: 2 + wave * 0.5,
@@ -286,7 +289,7 @@ function drawPlayer() {
 function drawEnemies() {
     for (let enemy of enemies) {
         // رسم عکس یا مربع
-        if (enemyImg.complete) {
+        if (enemyImg.complete && enemyImg.naturalWidth > 0) {
             ctx.drawImage(enemyImg, enemy.x - enemy.width / 2, enemy.y - enemy.height / 2, 
                          enemy.width, enemy.height);
         } else {
@@ -297,9 +300,9 @@ function drawEnemies() {
         
         // نوار جان
         ctx.fillStyle = '#ff0000';
-        ctx.fillRect(enemy.x - 20, enemy.y - 30, 40, 5);
+        ctx.fillRect(enemy.x - 25, enemy.y - 35, 50, 5);
         ctx.fillStyle = '#00ff00';
-        ctx.fillRect(enemy.x - 20, enemy.y - 30, 40 * (enemy.health / enemy.maxHealth), 5);
+        ctx.fillRect(enemy.x - 25, enemy.y - 35, 50 * (enemy.health / enemy.maxHealth), 5);
     }
 }
 
@@ -338,8 +341,8 @@ function drawBackground() {
 
 // آپدیت UI
 function updateUI() {
-    document.getElementById('healthValue').textContent = player.health;
-    document.getElementById('ammoValue').textContent = player.ammo;
+    document.getElementById('healthValue').textContent = Math.floor(player.health);
+    document.getElementById('ammoValue').textContent = Math.floor(player.ammo);
     document.getElementById('scoreValue').textContent = score;
     document.getElementById('waveValue').textContent = wave;
 }
